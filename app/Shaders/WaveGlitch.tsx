@@ -8,6 +8,8 @@ const WaveGlitchGradient = () => {
 
   useEffect(() => {
     const canvas = canvasRef.current;
+    if (!canvas) return;
+    
     const gl = canvas.getContext('webgl');
 
     if (!gl) {
@@ -16,6 +18,7 @@ const WaveGlitchGradient = () => {
     }
 
     const setCanvasSize = () => {
+      if (!canvas) return;
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
       gl.viewport(0, 0, canvas.width, canvas.height);
@@ -175,10 +178,12 @@ const WaveGlitchGradient = () => {
     const mouseLocation = gl.getUniformLocation(program, 'mouse');
     const mouseSpeedLocation = gl.getUniformLocation(program, 'mouseSpeed');
     
-    let startTime = Date.now();
+    const startTime = Date.now();
     let mousePos = { x: 0, y: 0 };
 
-    const handleMouseMove = (e) => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!canvas) return;
+      
       const rect = canvas.getBoundingClientRect();
       const newX = e.clientX - rect.left;
       const newY = canvas.height - (e.clientY - rect.top);

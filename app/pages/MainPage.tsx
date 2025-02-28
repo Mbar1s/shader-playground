@@ -11,8 +11,8 @@ import WaveLine from '../Shaders/WaveLine'
 import Glass from '../Shaders/Glass'
 import Fluids from '../Shaders/Fluids'
 import Rainbow from '../Shaders/Rainbow'
-
-type Props = {}
+import Explosion from '../Shaders/Explosion'
+type Props = Record<string, never>
 
 function MainPage({}: Props) {
   const [activeShader, setActiveShader] = useState<string>('ParticleSphere')
@@ -29,7 +29,8 @@ function MainPage({}: Props) {
     WaveLine: <WaveLine />,
     Glass: <Glass />,
     Fluids: <Fluids />,
-    Rainbow: <Rainbow />
+    Rainbow: <Rainbow />,
+    Explosion: <Explosion />,
   }
 
   return (

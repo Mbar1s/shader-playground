@@ -142,14 +142,14 @@ void main() {
 `;
 
 const ShapeMorph = () => {
-    const mountRef = useRef(null);
-    const sceneRef = useRef(null);
-    const frameId = useRef(null);
-    const meshRef = useRef(null);
-    const composerRef = useRef(null);
+    const mountRef = useRef<HTMLDivElement>(null);
+    const sceneRef = useRef<THREE.Scene | null>(null);
+    const frameId = useRef<number | null>(null);
+    const meshRef = useRef<THREE.Mesh | null>(null);
+    const composerRef = useRef<EffectComposer | null>(null);
 
     // Add state for current shape and controls
-    const [currentShape, setCurrentShape] = React.useState('sphere');
+    const [currentShape, setCurrentShape] = React.useState<'sphere' | 'box' | 'torus' | 'octahedron'>('sphere');
     const [noiseIntensity, setNoiseIntensity] = React.useState(1.0);
     const [pulseFrequency, setPulseFrequency] = React.useState(1.0);
 
@@ -178,7 +178,9 @@ const ShapeMorph = () => {
         renderer.shadowMap.type = THREE.PCFSoftShadowMap;
         renderer.toneMapping = THREE.ACESFilmicToneMapping;
         renderer.toneMappingExposure = 1.0;
-        mountRef.current.appendChild(renderer.domElement);
+        if (mountRef.current) {
+            mountRef.current.appendChild(renderer.domElement);
+        }
 
         // Lighting setup
         const ambientLight = new THREE.AmbientLight(0x333333);
@@ -237,7 +239,7 @@ const ShapeMorph = () => {
             side: THREE.DoubleSide
         });
         
-        const mesh = new THREE.Mesh(geometries[currentShape], material);
+        const mesh = new THREE.Mesh(geometries[currentShape as keyof typeof geometries], material);
         mesh.castShadow = true;
         mesh.receiveShadow = true;
         meshRef.current = mesh;
@@ -264,7 +266,7 @@ const ShapeMorph = () => {
         scene.add(particlesMesh);
 
         // Enhanced animation loop
-        const animate = (time) => {
+        const animate = (time: number) => {
             const t = time * 0.001;
             material.uniforms.uTime.value = t;
             material.uniforms.uNoiseIntensity.value = noiseIntensity;
@@ -309,7 +311,7 @@ const ShapeMorph = () => {
             if (frameId.current) {
                 cancelAnimationFrame(frameId.current);
             }
-            if (mountRef.current) {
+            if (mountRef.current && mountRef.current.contains(renderer.domElement)) {
                 mountRef.current.removeChild(renderer.domElement);
             }
             window.removeEventListener('resize', handleResize);
