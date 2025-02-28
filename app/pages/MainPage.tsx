@@ -9,6 +9,7 @@ import ShapeMorph from '../Shaders/ShapeMorph'
 import Lavalamp from '../Shaders/Lavalamp'
 import WaveLine from '../Shaders/WaveLine'
 import Glass from '../Shaders/Glass'
+import Fluids from '../Shaders/Fluids'
 
 type Props = {}
 
@@ -25,7 +26,8 @@ function MainPage({}: Props) {
     ShapeMorph: <ShapeMorph />,
     Lavalamp: <Lavalamp />,
     WaveLine: <WaveLine />,
-    Glass: <Glass />
+    Glass: <Glass />,
+    Fluids: <Fluids />
   }
 
   return (
