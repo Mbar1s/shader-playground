@@ -10,6 +10,7 @@ import Lavalamp from '../Shaders/Lavalamp'
 import WaveLine from '../Shaders/WaveLine'
 import Glass from '../Shaders/Glass'
 import Fluids from '../Shaders/Fluids'
+import Rainbow from '../Shaders/Rainbow'
 
 type Props = {}
 
@@ -27,7 +28,8 @@ function MainPage({}: Props) {
     Lavalamp: <Lavalamp />,
     WaveLine: <WaveLine />,
     Glass: <Glass />,
-    Fluids: <Fluids />
+    Fluids: <Fluids />,
+    Rainbow: <Rainbow />
   }
 
   return (
